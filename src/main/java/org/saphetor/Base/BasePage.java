@@ -20,8 +20,8 @@ public class BasePage {
 
     protected BasePage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 2), this);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 1), this);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20)); // long wait due to variant page
         action = new Actions(driver);
     }
 
@@ -70,7 +70,7 @@ public class BasePage {
     protected void scrollToElement(WebElement webElement) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", webElement);
         try {
-            Thread.sleep(500);
+            Thread.sleep(500); // scrolls too fast, hence the implicit wait
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -78,7 +78,7 @@ public class BasePage {
 
     // for debugging purposes
     protected void freezePage() {
-        ((JavascriptExecutor) driver).executeScript("window.stop();");
+        ((JavascriptExecutor) driver).executeScript("debugger;");
     }
 
     protected void sendKeysWindow(Keys keysToSend) {

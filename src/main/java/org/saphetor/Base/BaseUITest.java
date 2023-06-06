@@ -6,17 +6,23 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 public class BaseUITest extends BaseTest {
     private WebDriver driver;
+    private String url, env;
 
     @BeforeSuite
-    public void setup() {
+    @Parameters({"env"})
+    public void setup(String env) {
         ChromeOptions option = new ChromeOptions();
         option.addArguments("--remote-allow-origins=*");
         option.addArguments("start-maximized");
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(option);
+        this.env = env;
+        url = getProperties(env, "url");
+        driver.navigate().to(url);
     }
 
     @AfterSuite
@@ -31,7 +37,15 @@ public class BaseUITest extends BaseTest {
         return driver;
     }
 
-    public String getUrl() {
+    public String getCurrentUrl() {
         return driver.getCurrentUrl();
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getEnv() {
+        return env;
     }
 }

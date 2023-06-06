@@ -120,7 +120,6 @@ public class VarsomeVariantPage extends BasePage {
     public void setOrderByDropdown(String text) {
         clickElement(orderByDropdown);
         clickElement(orderByDropdownOptions(text));
-        freezePage();
         waitForPageToLoad();
     }
 

@@ -10,12 +10,8 @@ import java.util.List;
 
 public class VarsomeHomePage extends BasePage {
 
-    public VarsomeHomePage(WebDriver driver, boolean navigateToPage) {
+    public VarsomeHomePage(WebDriver driver) {
         super(driver);
-        if (navigateToPage) {
-            driver.navigate().to("https://varsome.com/");
-            clickCookiesPopupAcceptButton();
-        }
     }
 
     @FindBy(id = "onetrust-banner-sdk")
@@ -43,7 +39,7 @@ public class VarsomeHomePage extends BasePage {
     private WebElement modalSearchButton;
 
     @FindBy(name = "genome")
-    private WebElement genomeSearchDropdown; // element not interactable
+    private WebElement genomeSearchDropdown; // element not intractable
 
     @FindBy(xpath = "//div[@class='select-selected']")
     private WebElement genomeSearchDropdownSelectedValue;
@@ -124,6 +120,10 @@ public class VarsomeHomePage extends BasePage {
     public void fillPhenotypesField(String text) {
         phenotypesField.sendKeys(text);
         clickElement(phenotypesDropdownValues.get(0));
+    }
+
+    public void waitForPageToLoad() {
+        waitForVisibilityOf(searchButton);
     }
 
     public void fillAgeAtOnsetField(String text) {
